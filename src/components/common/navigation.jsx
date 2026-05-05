@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { removeUser } from "../../utils/user-slice";
+import { removeUser } from "../../store/user-slice";
 import { useDispatch } from "react-redux";
 
 export const NavBar = () => {

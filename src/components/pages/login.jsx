@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 
-import { addUser } from "../../utils/user-slice";
+import { addUser } from "../../store/user-slice";
 import { BASE_URL } from "../../utils/constants";
 
 export const Login = () => {
