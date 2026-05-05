@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { RootLayout } from "../layouts/RootLayout";
 import { Error } from "../components/pages/error";
+import { Login } from "../components/pages/login";
 // import { NotFound } from "../components/pages/notfound";
 
 export const router = createBrowserRouter([
@@ -10,8 +11,8 @@ export const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "/profile",
-        // element: Profile,
+        path: "/login",
+        Component: Login
       },
       //   {
       //     path: "*",
