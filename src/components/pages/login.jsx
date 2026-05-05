@@ -10,6 +10,7 @@ import { BASE_URL } from "../../utils/constants";
 export const Login = () => {
   const [email, setEmail] = useState("abcd@gmail.com");
   const [password, setPassword] = useState("Hash@989");
+  const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export const Login = () => {
       navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
+      setError(error.response?.data || "An error occurred during login.");
     }
   };
 
@@ -57,6 +59,7 @@ export const Login = () => {
               className="input input-bordered w-full max-w-xs"
             />
           </div>
+          <div>{error && <p className="text-error">{error}</p>}</div>
           <div className="card-actions">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
