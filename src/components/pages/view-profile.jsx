@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { UserCard } from "../common/user-card";
 import { useNavigate } from "react-router";
 const ViewProfile = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-center">

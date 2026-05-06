@@ -1,32 +1,25 @@
 import { useState } from "react";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-
-
-import { addUser } from "../../store/user-slice";
-import { BASE_URL } from "../../utils/constants";
+import { loginUser } from "../../store/user-slice";
 
 export const Login = () => {
   const [email, setEmail] = useState("abcd@gmail.com");
   const [password, setPassword] = useState("Hash@989");
-  const [error, setError] = useState(null);
+  const error = useSelector((state) => state.user.error);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        `${BASE_URL}/login`,
-        { email, password },
-        { withCredentials: true },
-      );
-      dispatch(addUser(response.data.data));
-      navigate("/");
-    } catch (error) {
-      console.error("Login failed:", error);
-      setError(error.response?.data || "An error occurred during login.");
+      const loggedInUser = await dispatch(loginUser({ email, password })).unwrap();
+
+      if (loggedInUser) {
+        navigate("/");
+      }
+    } catch {
+      // Error message is stored in Redux and rendered below the form.
     }
   };
 
@@ -59,7 +52,7 @@ export const Login = () => {
               className="input input-bordered w-full max-w-xs"
             />
           </div>
-          <div>{error && <p className="text-error">{error}</p>}</div>
+          {error && <div className="text-error">{error}</div>}
           <div className="card-actions">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login

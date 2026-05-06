@@ -1,14 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router";
 
 import { addUser } from "../../store/user-slice";
 import { BASE_URL } from "../../utils/constants";
 import { UserCard } from "../common/user-card";
 
 const EditProfile = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [age, setAge] = useState(user.age);
