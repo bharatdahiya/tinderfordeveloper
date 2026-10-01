@@ -8,10 +8,15 @@ import { UserCard } from "../common/user-card";
 
 const EditProfile = () => {
   const user = useSelector((state) => state.user.user);
+  if (!user) return null;
+  return <EditProfileForm user={user} />;
+};
+
+const EditProfileForm = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [age, setAge] = useState(user.age);
-  const [photourl, setPhotourl] = useState(user.photourl);
+  const [photourl, setPhotourl] = useState(user.photourl ?? "");
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
@@ -29,7 +34,9 @@ const EditProfile = () => {
     } catch (error) {
       console.error("Profile update failed:", error);
       setError(
-        error.response?.data || "An error occurred during profile update.",
+        error.response?.data?.message ||
+          (typeof error.response?.data === "string" && error.response.data) ||
+          "An error occurred during profile update.",
       );
     }
   };
@@ -100,7 +107,10 @@ const EditProfile = () => {
           </div>
         </div>
       </div>
-      <UserCard user={user} hideButtons />
+      <UserCard
+        user={{ ...user, firstName, lastName, age, photourl }}
+        hideButtons
+      />
     </div>
   );
 };

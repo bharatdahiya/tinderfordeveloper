@@ -42,9 +42,6 @@ export const NavBar = () => {
               <li>
                 <Link to="/connections">Connections</Link>
               </li>
-              <li>
-                <Link to="/settings">Settings</Link>
-              </li>
               <li onClick={logoutHandler}>
                 <Link to="/login">Logout</Link>
               </li>

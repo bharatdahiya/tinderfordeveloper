@@ -1,16 +1,69 @@
-# React + Vite
+# Developer Tinder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Tinder-style web app for developers: log in, browse a feed of other developers, and manage your profile and connections.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + Vite
+- Redux Toolkit / React Redux (state and async API calls)
+- React Router 7
+- Tailwind CSS 4 + daisyUI
+- Axios
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Requires Node.js 20+ and the companion backend API running locally.
 
-## Expanding the ESLint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The app runs at http://localhost:5173.
+
+### Backend
+
+The API base URL is set in [src/utils/constants.js](src/utils/constants.js) (default `http://localhost:7777`). Requests are sent with `withCredentials: true`, so the backend must enable CORS for the Vite origin with credentials and use cookie-based auth.
+
+Endpoints used:
+
+| Method | Path | Purpose |
+| ------ | ---- | ------- |
+| POST | `/login` | Log in |
+| POST | `/logout` | Log out |
+| GET | `/profile/view` | Current user (restores the session on refresh) |
+| PATCH | `/profile/edit` | Update profile |
+| GET | `/users/feed` | Feed of developers |
+| GET | `/api/connections` | Your connections |
+
+## Scripts
+
+| Command | Description |
+| ------- | ----------- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build into `dist/` |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run ESLint |
+
+## Project structure
+
+```
+src/
+  components/
+    common/   NavBar, Footer, UserCard, ToastMessage
+    pages/    Feed, Login, ViewProfile, EditProfile, Connections, Error
+  layouts/    RootLayout (navbar, footer, session restore)
+  routes/     Router configuration
+  store/      Redux store and slices (user, feed, connection, request)
+  utils/      Constants
+```
+
+## Routes
+
+| Path | Page |
+| ---- | ---- |
+| `/` | Feed |
+| `/login` | Login |
+| `/profile/view` | View profile |
+| `/profile/edit` | Edit profile |
+| `/connections` | Connections |
